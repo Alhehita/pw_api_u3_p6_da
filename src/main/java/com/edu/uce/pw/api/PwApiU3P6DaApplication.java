@@ -8,6 +8,8 @@ public class PwApiU3P6DaApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(PwApiU3P6DaApplication.class, args);
+		
+		
 	}
 
 }
