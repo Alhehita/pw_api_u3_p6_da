@@ -14,8 +14,8 @@ import jakarta.persistence.Table;
 public class Estudiante {
 	
 	@Id
+	@GeneratedValue(generator = "seq_estudiante", strategy = GenerationType.SEQUENCE)
 	@SequenceGenerator(name = "seq_estudiante", sequenceName = "seq_estudiante",allocationSize = 1)
-	@GeneratedValue(generator = "Seq_estudiante", strategy = GenerationType.SEQUENCE)
 	@Column(name="estu_id")
 	private Integer id;
 	@Column(name="estu_nombre")
@@ -25,8 +25,17 @@ public class Estudiante {
 	@Column(name="estu_fecha_nacimiento")
 	private LocalDateTime fechaNaciomiento;
 	
+	@Column(name="estu_genero")
+	private String genero;
+	
 	//Get y Set	
 	
+	public String getGenero() {
+		return genero;
+	}
+	public void setGenero(String genero) {
+		this.genero = genero;
+	}
 	public String getNombre() {
 		return nombre;
 	}
@@ -44,6 +53,9 @@ public class Estudiante {
 	}
 	public void setFechaNaciomiento(LocalDateTime fechaNaciomiento) {
 		this.fechaNaciomiento = fechaNaciomiento;
+	}
+	public Integer getId() {
+		return id;
 	}
 	
 	
