@@ -26,7 +26,6 @@ public class EstudianteRepositoryImpl implements IEstudianteRepository {
 
 	@Override
 	public void actualizar(Estudiante estudiante) {
-		// TODO Auto-generated method stub
 		this.entityManager.merge(estudiante);
 	}
 
@@ -37,7 +36,6 @@ this.entityManager.remove(this.seleccionar(id));
 
 	@Override
 	public void insertar(Estudiante estudiante) {
-		// TODO Auto-generated method stub
 		this.entityManager.persist(estudiante);
 	}
 
