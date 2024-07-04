@@ -25,36 +25,53 @@ public class EstudianteController {
 	private IEstudianteService estudianteService;
 	
 	//http://localhost:8080/API/v1.0/Matricula/estudiantes/guardar
-	@PostMapping(path="/guardar")
+	//@PostMapping/*(path="/guardar")
+	//http://localhost:8080/API/v1.0/Matricula/estudiantes     NIVEL 1
+	@PostMapping
 	public void guardar(@RequestBody Estudiante estudiante) {
 		this.estudianteService.guardar(estudiante);
 		
 	}
+
+
+
 	//http://localhost:8080/API/v1.0/Matricula/estudiantes/actualizar
-	@PutMapping(path="/actualizar")
-	public void actualizar(@RequestBody Estudiante estudiante) {
-		
-		
+	//@PutMapping(path="/actualizar")
+	//http://localhost:8080/API/v1.0/Matricula/estudiantes/3     NIVEL1
+
+	@PutMapping(path="/{id}")
+	public void actualizar(@RequestBody Estudiante estudiante, @PathVariable Integer id) {
+			
 		this.estudianteService.actualizar(estudiante);
 		
 	}
 	//http://localhost:8080/API/v1.0/Matricula/estudiantes/borrar/2
-	@DeleteMapping(path="/borrar/{id}")
+	//@DeleteMapping(path="/borrar/{id}")
+
+	//http://localhost:8080/API/v1.0/Matricula/estudiantes/5
+	@DeleteMapping(path = "/{id}")
 	public void borrar(@PathVariable Integer id) {
-		
 		this.estudianteService.borrar(id);
 	}
 	
 	
 	//http://localhost:8080/API/v1.0/Matricula/estudiantes/buscar/4/nuevo/prueba
-	@GetMapping(path="/buscar/{id}/nuevo/{dato}")
-	public Estudiante buscar(@PathVariable Integer id, String dato) {
-		System.out.println("Dato: " + dato);
+	//@GetMapping(path="/buscar/{id}/nuevo/{dato}")
+	
+
+	//http://localhost:8080/API/v1.0/Matricula/estudiantes/3
+	@GetMapping(path="/{id}")
+	public Estudiante buscar(@PathVariable Integer id) {
 		return this.estudianteService.buscar(id);
 	}
+
+
 	//http://localhost:8080/API/v1.0/Matricula/estudiantes/actualizar/parcial
-	@PatchMapping(path="/actualizar/parcial")
-	public void actualizarParcial(@RequestBody Estudiante estudiante) {
+	//@PatchMapping(path="/actualizar/parcial")
+
+	//http://localhost:8080/API/v1.0/Matricula/estudiantes/actualizar/4      NIVEL 1
+	@PatchMapping(path="/{id}")
+	public void actualizarParcial(@RequestBody Estudiante estudiante, @PathVariable Integer id) {
 		
 		Estudiante estudiante2 = this.estudianteService.buscar(estudiante.getId());
 		
