@@ -17,7 +17,7 @@ public class EstudianteRepositoryImpl implements IEstudianteRepository {
 
 	@PersistenceContext
 	private EntityManager entityManager;
-	
+
 	@Override
 	public Estudiante seleccionar(Integer id) {
 
@@ -31,7 +31,7 @@ public class EstudianteRepositoryImpl implements IEstudianteRepository {
 
 	@Override
 	public void eliminar(Integer id) {
-this.entityManager.remove(this.seleccionar(id));		
+		this.entityManager.remove(this.seleccionar(id));
 	}
 
 	@Override
@@ -41,7 +41,8 @@ this.entityManager.remove(this.seleccionar(id));
 
 	@Override
 	public List<Estudiante> seleccionarGenero(String genero) {
-		TypedQuery<Estudiante> query =  this.entityManager.createQuery("SELECT e FROM Estudiante e WHERE e.genero :=genero",Estudiante.class);
+		TypedQuery<Estudiante> query = entityManager.createQuery("SELECT e FROM Estudiante e WHERE e.genero = :genero",
+				Estudiante.class);
 		query.setParameter("genero", genero);
 		return query.getResultList();
 	}

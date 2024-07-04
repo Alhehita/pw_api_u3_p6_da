@@ -1,7 +1,6 @@
 package com.edu.uce.pw.api.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -13,9 +12,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import com.edu.uce.pw.api.repository.modelo.Materia;
 import com.edu.uce.pw.api.service.IMateriaService;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 
-@Controller
+@RestController
 @RequestMapping(path = "/materias")
 public class MateriaController {
 
