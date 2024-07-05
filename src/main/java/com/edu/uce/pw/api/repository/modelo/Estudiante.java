@@ -29,10 +29,11 @@ public class Estudiante {
 	private String genero;
 	
 	//Get y Set	
-	
+
 	public String getGenero() {
 		return genero;
 	}
+	
 	public void setGenero(String genero) {
 		this.genero = genero;
 	}
@@ -58,6 +59,12 @@ public class Estudiante {
 		return id;
 	}
 	
+
+	@Override
+	public String toString() {
+		return "Estudiante [id=" + id + ", nombre=" + nombre + ", apellido=" + apellido + ", fechaNaciomiento="
+				+ fechaNaciomiento + ", genero=" + genero + "]";
+	}
 	
 
 }
