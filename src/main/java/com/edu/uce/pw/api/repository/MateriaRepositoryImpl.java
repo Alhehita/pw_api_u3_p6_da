@@ -27,7 +27,7 @@ public class MateriaRepositoryImpl implements IMateriaRepository{
 
     @Override
     public void eliminar(Integer id) {
-        this.entityManager.remove(id);
+        this.entityManager.remove(this.seleccionar(id));
     }
 
     @Override

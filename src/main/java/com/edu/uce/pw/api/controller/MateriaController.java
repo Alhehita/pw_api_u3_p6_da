@@ -22,38 +22,26 @@ public class MateriaController {
     @Autowired
     private IMateriaService materiaService;
 
-    //http://localhost:8080/API/v1.0/Matricula/materias/guardar
-	@PostMapping(path="/guardar")
+    //http://localhost:8080/API/v1.0/Matricula/materias
+	@PostMapping()
 	public void guardar(@RequestBody Materia materia) {
         this.materiaService.guardar(materia);
-		
 	}
-	//http://localhost:8080/API/v1.0/Matricula/materias/actualizar
-	@PutMapping(path="/actualizar")
-	public void actualizar(@RequestBody Materia materia) {
-		
-		
+
+	//http://localhost:8080/API/v1.0/Matricula/materias/2
+	@PutMapping(path="/{id}")
+	public void actualizar(@RequestBody Materia materia,@PathVariable Integer id) {
+		materia.setId(id);
 		this.materiaService.actualizar(materia);
-		
 	}
-	//http://localhost:8080/API/v1.0/Matricula/materias/borrar/2
-	@DeleteMapping(path="/borrar/{id}")
-	public void borrar(@PathVariable Integer id) {
+
+	//http://localhost:8080/API/v1.0/Matricula/materias/1
+	@PatchMapping(path="/{id}")
+	public void actualizarParcial(@RequestBody Materia materia,@PathVariable Integer id) {
 		
-		this.materiaService.borrar(id);
-	}
-	
-	
-	//http://localhost:8080/API/v1.0/Matricula/materias/buscar/4
-	@GetMapping(path="/buscar/{id}")
-	public Materia buscar(@PathVariable Integer id) {
-		return this.materiaService.buscar(id);
-	}
-	//http://localhost:8080/API/v1.0/Matricula/materias/actualizar/parcial
-	@PatchMapping(path="/actualizar/parcial")
-	public void actualizarParcial(@RequestBody Materia materia) {
-		
+		materia.setId(id);
 		Materia materia2 = this.materiaService.buscar(materia.getId());
+
 		
 		if(materia.getNombre()!= null) {
 			materia2.setNombre(materia.getNombre());
@@ -65,7 +53,21 @@ public class MateriaController {
 			materia2.setDescripcion(materia.getDescripcion());
 		}
 		this.materiaService.actualizar(materia2);
-		
+			
 	}
+	//http://localhost:8080/API/v1.0/Matricula/materias/2
+	@DeleteMapping(path="/{id}")
+	public void borrar(@PathVariable Integer id) {
+		
+		this.materiaService.borrar(id);
+	}
+	
+	
+	//http://localhost:8080/API/v1.0/Matricula/materias/4
+	@GetMapping(path="{id}")
+	public Materia buscar(@PathVariable Integer id) {
+		return this.materiaService.buscar(id);
+	}
+	
     
 }

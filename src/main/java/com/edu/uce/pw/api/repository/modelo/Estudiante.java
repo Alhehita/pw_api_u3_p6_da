@@ -18,6 +18,7 @@ public class Estudiante {
 	@SequenceGenerator(name = "seq_estudiante", sequenceName = "seq_estudiante",allocationSize = 1)
 	@Column(name="estu_id")
 	private Integer id;
+	
 	@Column(name="estu_nombre")
 	private String nombre;
 	@Column(name="estu_apellido")
@@ -64,6 +65,10 @@ public class Estudiante {
 	public String toString() {
 		return "Estudiante [id=" + id + ", nombre=" + nombre + ", apellido=" + apellido + ", fechaNaciomiento="
 				+ fechaNaciomiento + ", genero=" + genero + "]";
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
 	
 
