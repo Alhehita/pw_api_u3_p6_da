@@ -1,6 +1,7 @@
 package com.edu.uce.pw.api.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -8,7 +9,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-
 import com.edu.uce.pw.api.repository.modelo.Materia;
 import com.edu.uce.pw.api.service.IMateriaService;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,20 +24,24 @@ public class MateriaController {
 
     //http://localhost:8080/API/v1.0/Matricula/materias
 	@PostMapping()
-	public void guardar(@RequestBody Materia materia) {
+	public ResponseEntity<Materia> guardar(@RequestBody Materia materia) {
         this.materiaService.guardar(materia);
+		return ResponseEntity.status(201).body(materia);
+
 	}
 
 	//http://localhost:8080/API/v1.0/Matricula/materias/2
 	@PutMapping(path="/{id}")
-	public void actualizar(@RequestBody Materia materia,@PathVariable Integer id) {
+	public ResponseEntity<Materia> actualizar(@RequestBody Materia materia,@PathVariable Integer id) {
 		materia.setId(id);
 		this.materiaService.actualizar(materia);
+
+		return ResponseEntity.status(238).body(materia);
 	}
 
 	//http://localhost:8080/API/v1.0/Matricula/materias/1
 	@PatchMapping(path="/{id}")
-	public void actualizarParcial(@RequestBody Materia materia,@PathVariable Integer id) {
+	public ResponseEntity<Materia> actualizarParcial(@RequestBody Materia materia,@PathVariable Integer id) {
 		
 		materia.setId(id);
 		Materia materia2 = this.materiaService.buscar(materia.getId());
@@ -54,19 +58,23 @@ public class MateriaController {
 		}
 		this.materiaService.actualizar(materia2);
 			
+		return ResponseEntity.status(239).body(materia);
 	}
+
 	//http://localhost:8080/API/v1.0/Matricula/materias/2
 	@DeleteMapping(path="/{id}")
-	public void borrar(@PathVariable Integer id) {
+	public ResponseEntity<String> borrar(@PathVariable Integer id) {
 		
 		this.materiaService.borrar(id);
+		return ResponseEntity.status(240).body("Borrado");
+
 	}
 	
 	
 	//http://localhost:8080/API/v1.0/Matricula/materias/4
 	@GetMapping(path="{id}")
-	public Materia buscar(@PathVariable Integer id) {
-		return this.materiaService.buscar(id);
+	public ResponseEntity<Materia> buscar(@PathVariable Integer id) {
+		return ResponseEntity.status(239).body(this.materiaService.buscar(id));
 	}
 	
     
