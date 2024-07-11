@@ -30,7 +30,7 @@ public class EstudianteServiceImpl implements IEstudianteService {
 	}
 
 	@Override
-	public void guardar(Estudiante estudiante) {
+		public void guardar(Estudiante estudiante) {
 		this.estudianteRepository.insertar(estudiante);
 	}
 
