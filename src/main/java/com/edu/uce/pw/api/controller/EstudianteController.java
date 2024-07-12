@@ -1,10 +1,10 @@
 package com.edu.uce.pw.api.controller;
 
-import java.time.LocalDateTime;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,40 +28,31 @@ public class EstudianteController {
 	private IEstudianteService estudianteService;
 
 	// http://localhost:8080/API/v1.0/Matricula/estudiantes/3 NIVEL 1
-	@GetMapping(path = "/{id}")
+	@GetMapping(path = "/{id}", produces="application/xml")
 	public ResponseEntity<Estudiante> buscarPorId(@PathVariable Integer id) {
-
 		// return ResponseEntity.status(239).body(this.estudianteService.buscar(id));
 
 		HttpHeaders cabeceras = new HttpHeaders();
-
 		// las cabeceras manejan un esquema de clave valor
 		cabeceras.add("mensaje_236", "Corresponde a la consulta de un recurso");
 		cabeceras.add("valor", "Estudiante encontrado");
 		return new ResponseEntity<>(this.estudianteService.buscar(id), cabeceras, 236);
 	}
 
-	// http://localhost:8080/API/v1.0/Matricula/estudiantes/guardar
-
 	// http://localhost:8080/API/v1.0/Matricula/estudiantes NIVEL 1
-	@PostMapping
+	@PostMapping(produces = "application/json", consumes = "application/xml") //no es mandatorio que tengan el mismo formato
 	public ResponseEntity<Estudiante> guardar(@RequestBody Estudiante estudiante) {
-
 		this.estudianteService.guardar(estudiante);
-
 		HttpHeaders cabeceras = new HttpHeaders();
+
 		cabeceras.add("mensaje_201", "Corresponde al ingreso de un recurso");
 		cabeceras.add("mensaje_201", "Estudiante ingresado correctamente");
-
-		return new ResponseEntity<>(estudiante, cabeceras, 201);
-
+		return new ResponseEntity<>(estudiante, cabeceras, HttpStatus.CREATED);
 	}
-
-	// http://localhost:8080/API/v1.0/Matricula/estudiantes/actualizar
 
 	// http://localhost:8080/API/v1.0/Matricula/estudiantes/3 NIVEL1
 
-	@PutMapping(path = "/{id}")
+	@PutMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_XML_VALUE)
 	public ResponseEntity<Estudiante> actualizar(@RequestBody Estudiante estudiante, @PathVariable Integer id) {
 		estudiante.setId(id);
 		this.estudianteService.actualizar(estudiante);
@@ -79,7 +70,7 @@ public class EstudianteController {
 
 	// http://localhost:8080/API/v1.0/Matricula/estudiantes/3
 
-	@PatchMapping(path = "/{id}")
+	@PatchMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_XML_VALUE)
 	public ResponseEntity<Estudiante> actualizarParcial(@RequestBody Estudiante estudiante, @PathVariable Integer id) {
 		estudiante.setId(id);
 
@@ -107,7 +98,7 @@ public class EstudianteController {
 	// http://localhost:8080/API/v1.0/Matricula/estudiantes/borrar/2
 
 	// http://localhost:8080/API/v1.0/Matricula/estudiantes/5 NIVEL 1
-	@DeleteMapping(path = "/{id}")
+	@DeleteMapping(path = "/{id}", produces = MediaType.TEXT_PLAIN_VALUE)
 	public ResponseEntity<String> borrar(@PathVariable Integer id) {
 
 		this.estudianteService.borrar(id);
@@ -130,6 +121,13 @@ public class EstudianteController {
 		System.out.println("Dato: " + id);
 		System.out.println("Dato: " + prueba);
 		return this.estudianteService.buscar(id);
+	}
+
+	//http://localhost:8080/API/v1.0/Matricula/estudiantes/texto/plano
+	@GetMapping(path = "/texto/plano")
+	public String prueba() {
+		String prueba = "Texto de prueba";
+		return prueba;
 	}
 
 }
