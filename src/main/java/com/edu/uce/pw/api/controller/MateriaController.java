@@ -2,6 +2,7 @@ package com.edu.uce.pw.api.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,7 +24,7 @@ public class MateriaController {
 	private IMateriaService materiaService;
 
 	// http://localhost:8080/API/v1.0/Matricula/materias/4
-	@GetMapping(path = "{id}")
+	@GetMapping(path = "{id}",produces="application/xml")
 	public ResponseEntity<Materia> buscar(@PathVariable Integer id) {
 		// return ResponseEntity.status(239).body(this.materiaService.buscar(id));
 
@@ -37,7 +38,7 @@ public class MateriaController {
 	}
 
 	// http://localhost:8080/API/v1.0/Matricula/materias
-	@PostMapping()
+	@PostMapping(produces = "application/json", consumes = "application/xml")
 	public ResponseEntity<Materia> guardar(@RequestBody Materia materia) {
 		this.materiaService.guardar(materia);
 		//return ResponseEntity.status(201).body(materia);
@@ -51,7 +52,7 @@ public class MateriaController {
 	}
 
 	// http://localhost:8080/API/v1.0/Matricula/materias/2
-	@PutMapping(path = "/{id}")
+	@PutMapping(path = "/{id}",produces = "application/json", consumes = "application/xml")
 	public ResponseEntity<Materia> actualizar(@RequestBody Materia materia, @PathVariable Integer id) {
 		materia.setId(id);
 		this.materiaService.actualizar(materia);
@@ -67,7 +68,7 @@ public class MateriaController {
 	}
 
 	// http://localhost:8080/API/v1.0/Matricula/materias/1
-	@PatchMapping(path = "/{id}")
+	@PatchMapping(path = "/{id}",produces = "application/json", consumes = "application/xml")
 	public ResponseEntity<Materia> actualizarParcial(@RequestBody Materia materia, @PathVariable Integer id) {
 
 		materia.setId(id);
@@ -95,7 +96,7 @@ public class MateriaController {
 	}
 
 	// http://localhost:8080/API/v1.0/Matricula/materias/2
-	@DeleteMapping(path = "/{id}")
+	@DeleteMapping(path = "/{id}", produces = MediaType.TEXT_PLAIN_VALUE)
 	public ResponseEntity<String> borrar(@PathVariable Integer id) {
 
 		this.materiaService.borrar(id);
