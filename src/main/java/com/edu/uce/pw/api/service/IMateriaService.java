@@ -1,7 +1,10 @@
 package com.edu.uce.pw.api.service;
 
 
+import java.util.List;
+
 import com.edu.uce.pw.api.repository.modelo.Materia;
+import com.edu.uce.pw.api.service.to.MateriaTO;
 
 public interface IMateriaService {
 
@@ -12,6 +15,8 @@ public interface IMateriaService {
 	public void borrar(Integer id);
 
 	public void guardar(Materia materia);
+
+	public List<MateriaTO> buscarPorIdEstudiante(Integer id);
 	
     
 }
