@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Link;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -141,7 +142,10 @@ public class EstudianteController {
 	}
 
 	// http://localhost:8080/API/v1.0/Matricula/estudiantes/hateoas/{id}
-	@GetMapping(path = "/hateoas/{id}", produces = MediaType.APPLICATION_JSON_VALUE) //hacer para que devuelva una lista de estudiantes con un for y a cada estudiante se le asigna su link
+	@GetMapping(path = "/hateoas/{id}", produces = MediaType.APPLICATION_JSON_VALUE) // hacer para que devuelva una
+																						// lista de estudiantes con un
+																						// for y a cada estudiante se le
+																						// asigna su link
 	public EstudianteTO buscarHateos(@PathVariable Integer id) {
 		EstudianteTO estudiante = this.estudianteService.buscarPorID(id);
 
@@ -161,9 +165,25 @@ public class EstudianteController {
 	}
 
 	// http://localhost:8080/API/v1.0/Matricula/estudiantes/3/materias
-	@GetMapping(path  = "/{id}/materias", produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(path = "/{id}/materias", produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<MateriaTO> buscarMateriaPorEstudiante(@PathVariable Integer id) {
 		return this.materiaService.buscarPorIdEstudiante(id);
+	}
+
+	// http://localhost:8080/API/v1.0/Matricula/estudiantes/todos
+	@GetMapping(path = "/todos", produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<EstudianteTO> buscarTodosHateos() {
+		List<EstudianteTO> estudiantes = this.estudianteService.buscarTodos();
+
+		for (EstudianteTO estudiante : estudiantes) {
+			Link myLink = linkTo(methodOn(EstudianteController.class)
+					.buscarMateriaPorEstudiante(estudiante.getId()))
+					.withRel("Sus Materias");
+
+			// Agregar el enlace al objeto EstudianteTO
+			estudiante.add(myLink);
+		}
+		return estudiantes;
 	}
 
 }
