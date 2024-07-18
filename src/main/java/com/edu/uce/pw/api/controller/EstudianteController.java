@@ -1,9 +1,9 @@
 package com.edu.uce.pw.api.controller;
 
-
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.Link;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -24,6 +24,8 @@ import com.edu.uce.pw.api.service.IEstudianteService;
 import com.edu.uce.pw.api.service.IMateriaService;
 import com.edu.uce.pw.api.service.to.EstudianteTO;
 import com.edu.uce.pw.api.service.to.MateriaTO;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
 @RequestMapping(path = "/estudiantes")
@@ -35,7 +37,7 @@ public class EstudianteController {
 	private IMateriaService materiaService;
 
 	// http://localhost:8080/API/v1.0/Matricula/estudiantes/3 NIVEL 1
-	@GetMapping(path = "/{id}", produces="application/xml")
+	@GetMapping(path = "/{id}", produces = "application/xml")
 	public ResponseEntity<Estudiante> buscarPorId(@PathVariable Integer id) {
 		// return ResponseEntity.status(239).body(this.estudianteService.buscar(id));
 
@@ -47,7 +49,8 @@ public class EstudianteController {
 	}
 
 	// http://localhost:8080/API/v1.0/Matricula/estudiantes NIVEL 1
-	@PostMapping(produces = "application/json", consumes = "application/xml") //no es mandatorio que tengan el mismo formato
+	@PostMapping(produces = "application/json", consumes = "application/xml") // no es mandatorio que tengan el mismo
+																				// formato
 	public ResponseEntity<Estudiante> guardar(@RequestBody Estudiante estudiante) {
 		this.estudianteService.guardar(estudiante);
 		HttpHeaders cabeceras = new HttpHeaders();
@@ -130,22 +133,37 @@ public class EstudianteController {
 		return this.estudianteService.buscar(id);
 	}
 
-	//http://localhost:8080/API/v1.0/Matricula/estudiantes/texto/plano
+	// http://localhost:8080/API/v1.0/Matricula/estudiantes/texto/plano
 	@GetMapping(path = "/texto/plano")
 	public String prueba() {
 		String prueba = "Texto de prueba";
 		return prueba;
 	}
 
-	//http://localhost:8080/API/v1.0/Matricula/estudiantes/hateoas/{id}
-	@GetMapping("/hateoas/{id}")
-	public EstudianteTO buscarHateos(@PathVariable Integer id){
+	// http://localhost:8080/API/v1.0/Matricula/estudiantes/hateoas/{id}
+	@GetMapping(path = "/hateoas/{id}", produces = MediaType.APPLICATION_JSON_VALUE) //hacer para que devuelva una lista de estudiantes con un for y a cada estudiante se le asigna su link
+	public EstudianteTO buscarHateos(@PathVariable Integer id) {
 		EstudianteTO estudiante = this.estudianteService.buscarPorID(id);
-		List<MateriaTO> lista = this.materiaService.buscarPorIdEstudiante(id);
-		estudiante.setMaterias(lista);
+
+		Link myLink = linkTo(methodOn(EstudianteController.class).buscarMateriaPorEstudiante(id))
+				.withRel("Sus Materias"); // va la clase donde
+		// quiero
+		// reemplazara la
+		// capacidad por el
+		// hipervinculo
+
+		estudiante.add(myLink); // se agrega el hipervinculo
+
+		// Error, esto es una carga eager
+		// List<MateriaTO> lista = this.materiaService.buscarPorIdEstudiante(id);
+		// estudiante.setMaterias(lista);
 		return estudiante;
 	}
 
-
+	// http://localhost:8080/API/v1.0/Matricula/estudiantes/3/materias
+	@GetMapping(path  = "/{id}/materias", produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<MateriaTO> buscarMateriaPorEstudiante(@PathVariable Integer id) {
+		return this.materiaService.buscarPorIdEstudiante(id);
+	}
 
 }
