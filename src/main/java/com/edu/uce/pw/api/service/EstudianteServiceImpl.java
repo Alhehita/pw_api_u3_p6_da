@@ -44,6 +44,7 @@ public class EstudianteServiceImpl implements IEstudianteService {
 	public EstudianteTO convertir(Estudiante estudiante) {
 		EstudianteTO estudianteTO = new EstudianteTO();
 		estudianteTO.setApellido(estudiante.getApellido());
+		estudianteTO.setCedula(estudiante.getCedula());
 		estudianteTO.setFechaNaciomiento(estudiante.getFechaNaciomiento());
 		estudianteTO.setGenero(estudiante.getGenero());
 		estudianteTO.setId(estudiante.getId());
@@ -75,6 +76,17 @@ public class EstudianteServiceImpl implements IEstudianteService {
 	@Override
 	public List<EstudianteTO> buscarTodos() {
 		return convertirLista(this.estudianteRepository.seleccionarTodos());
+	}
+
+	@Override
+	public EstudianteTO buscarPorCedula(String cedula) {
+		Estudiante estudiante = this.estudianteRepository.seleccionarPorCedula(cedula);
+		return convertir(estudiante);
+	}
+
+	@Override
+	public void borrarPorCedula(String cedula) {
+		this.estudianteRepository.eliminarPorCedula(cedula);
 	}
 
 

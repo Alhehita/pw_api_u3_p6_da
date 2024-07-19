@@ -21,4 +21,14 @@ public interface IEstudianteService {
 
 	public List<EstudianteTO> buscarTodos();
 
+
+
+	 ////////////////////////////////
+
+	 EstudianteTO buscarPorCedula(String cedula);
+
+	 void borrarPorCedula(String cedula);
+
+	// void actualizarPorCedula(Estudiante estudiante);
+
 }

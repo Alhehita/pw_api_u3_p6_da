@@ -19,9 +19,21 @@ public class EstudianteTO extends RepresentationModel<EstudianteTO> implements S
 	private LocalDateTime fechaNaciomiento;
 	
 	private String genero;
+    
+    private String cedula;
 
   //  private List<MateriaTO> materias;
     
+    public String getCedula() {
+        return cedula;
+    }
+
+
+    public void setCedula(String cedula) {
+        this.cedula = cedula;
+    }
+
+
     public Integer getId() {
         return id;
     }

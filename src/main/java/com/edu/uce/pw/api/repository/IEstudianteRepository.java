@@ -21,6 +21,17 @@ public interface IEstudianteRepository {
 	 List<Estudiante> seleccionarTodos();
 
 
+	 ////////////////////////////////
+
+	 Estudiante seleccionarPorCedula(String cedula);
+
+	 void eliminarPorCedula(String cedula);
+
+	// void actualizarPorCedula(Estudiante estudiante);
+
+
+
+
 
 
 }

@@ -54,4 +54,27 @@ public class EstudianteRepositoryImpl implements IEstudianteRepository {
 		return query.getResultList();
 	}
 
+
+	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	@Override
+	public Estudiante seleccionarPorCedula(String cedula) {
+		TypedQuery<Estudiante> query = this.entityManager.createQuery("SELECT e FROM Estudiante e WHERE e.cedula= :cedula",Estudiante.class);
+		query.setParameter("cedula", cedula);
+
+		return query.getSingleResult();
+	}
+
+	@Override
+	public void eliminarPorCedula(String cedula) {
+
+		this.entityManager.remove(this.seleccionarPorCedula(cedula));
+	}
+
+	// @Override
+	// public void actualizarPorCedula(Estudiante estudiante) {
+
+	// 	this.entityManager.merge(this.seleccionarPorCedula(null));
+	// }
+
 }
