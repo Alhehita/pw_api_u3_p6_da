@@ -9,6 +9,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -29,6 +30,8 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
+@CrossOrigin
+//@CrossOrigin(value = "http://localhost:8080")
 @RequestMapping(path = "/estudiantes")
 public class EstudianteController {
 
@@ -50,7 +53,7 @@ public class EstudianteController {
 	}
 
 	// http://localhost:8080/API/v1.0/Matricula/estudiantes NIVEL 1
-	@PostMapping(produces = "application/json", consumes = "application/xml") // no es mandatorio que tengan el mismo
+	@PostMapping(produces = "application/json", consumes = "application/json") // no es mandatorio que tengan el mismo
 																				// formato
 	public ResponseEntity<Estudiante> guardar(@RequestBody Estudiante estudiante) {
 		this.estudianteService.guardar(estudiante);
@@ -217,10 +220,10 @@ public class EstudianteController {
 	
 	// http://localhost:8080/API/v1.0/Matricula/estudiantes/cedula/3 NIVEL1
 
-	@PutMapping(path = "/cedula/{cedula}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_XML_VALUE)
+	@PutMapping(path = "/cedula/{cedula}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Estudiante> actualizarPorCedula(@RequestBody Estudiante estudiante, @PathVariable String cedula) {
 		estudiante.setCedula(cedula);
-		this.estudianteService.actualizar(estudiante);
+		this.estudianteService.actualizarPorCedula(cedula, estudiante);
 		HttpHeaders cabeceras = new HttpHeaders();
 		cabeceras.add("mensaje_238", "Corresponde a la actualizacion completa de un recurso");
 		cabeceras.add("mensaje_238", "Estudiante actualizado correctamente");

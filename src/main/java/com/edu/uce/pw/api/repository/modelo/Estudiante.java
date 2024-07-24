@@ -3,6 +3,7 @@ package com.edu.uce.pw.api.repository.modelo;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;import jakarta.persistence.GenerationType;
@@ -35,7 +36,7 @@ public class Estudiante {
 	@Column(name="estu_cedula")
 	private String cedula;
 
-	@OneToMany(mappedBy = "estudiante")
+	@OneToMany(mappedBy = "estudiante", cascade = CascadeType.ALL)
 	private List<Materia> materias;
 	
 	//Get y Set	

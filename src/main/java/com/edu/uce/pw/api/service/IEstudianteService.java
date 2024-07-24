@@ -23,12 +23,13 @@ public interface IEstudianteService {
 
 
 
+
 	 ////////////////////////////////
 
 	 EstudianteTO buscarPorCedula(String cedula);
 
 	 void borrarPorCedula(String cedula);
 
-	// void actualizarPorCedula(Estudiante estudiante);
+	 void actualizarPorCedula(String cedula, Estudiante estudiante);
 
 }

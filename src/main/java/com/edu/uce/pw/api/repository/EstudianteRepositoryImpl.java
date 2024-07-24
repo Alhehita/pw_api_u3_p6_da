@@ -71,10 +71,14 @@ public class EstudianteRepositoryImpl implements IEstudianteRepository {
 		this.entityManager.remove(this.seleccionarPorCedula(cedula));
 	}
 
-	// @Override
-	// public void actualizarPorCedula(Estudiante estudiante) {
+	 @Override
+	 public void actualizarPorCedula(String cedula, Estudiante estudiante) {
 
-	// 	this.entityManager.merge(this.seleccionarPorCedula(null));
-	// }
+		Estudiante estudianteExistente = this.seleccionarPorCedula(cedula);
+	
+			// Guardar los cambios
+			this.entityManager.merge(estudianteExistente);
+		
+	}
 
 }

@@ -89,6 +89,20 @@ public class EstudianteServiceImpl implements IEstudianteService {
 		this.estudianteRepository.eliminarPorCedula(cedula);
 	}
 
+	@Override
+	public void actualizarPorCedula(String cedula, Estudiante estudiante) {
+		Estudiante estudianteExistente = this.estudianteRepository.seleccionarPorCedula(cedula);
+		if (estudianteExistente != null) {
+			// Actualizar los campos del estudiante existente
+			estudianteExistente.setNombre(estudiante.getNombre());
+			estudianteExistente.setApellido(estudiante.getApellido());
+			estudianteExistente.setFechaNaciomiento(estudiante.getFechaNaciomiento());
+			estudianteExistente.setGenero(estudiante.getGenero());
+			
+			// Guardar los cambios
+	this.estudianteRepository.actualizarPorCedula(cedula, estudianteExistente);}
 
+	
+		}
 
 }
